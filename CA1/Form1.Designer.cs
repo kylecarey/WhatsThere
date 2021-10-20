@@ -39,6 +39,10 @@ namespace CA1
             this.flyingToSearchButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.flyingToInput = new System.Windows.Forms.TextBox();
+            this.quoteOutputTextbox = new System.Windows.Forms.TextBox();
+            this.getQuotesButton = new System.Windows.Forms.Button();
+            this.departureDate = new System.Windows.Forms.DateTimePicker();
+            this.destinationDate = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // departureInput
@@ -129,11 +133,47 @@ namespace CA1
             this.flyingToInput.Size = new System.Drawing.Size(169, 20);
             this.flyingToInput.TabIndex = 5;
             // 
+            // quoteOutputTextbox
+            // 
+            this.quoteOutputTextbox.Location = new System.Drawing.Point(226, 333);
+            this.quoteOutputTextbox.Name = "quoteOutputTextbox";
+            this.quoteOutputTextbox.Size = new System.Drawing.Size(336, 20);
+            this.quoteOutputTextbox.TabIndex = 10;
+            // 
+            // getQuotesButton
+            // 
+            this.getQuotesButton.Location = new System.Drawing.Point(353, 304);
+            this.getQuotesButton.Name = "getQuotesButton";
+            this.getQuotesButton.Size = new System.Drawing.Size(75, 23);
+            this.getQuotesButton.TabIndex = 11;
+            this.getQuotesButton.Text = "Get Quotes";
+            this.getQuotesButton.UseVisualStyleBackColor = true;
+            this.getQuotesButton.Click += new System.EventHandler(this.getQuotesButton_Click);
+            // 
+            // departureDate
+            // 
+            this.departureDate.Location = new System.Drawing.Point(12, 159);
+            this.departureDate.MinDate = new System.DateTime(2021, 10, 20, 0, 0, 0, 0);
+            this.departureDate.Name = "departureDate";
+            this.departureDate.Size = new System.Drawing.Size(200, 20);
+            this.departureDate.TabIndex = 12;
+            // 
+            // destinationDate
+            // 
+            this.destinationDate.Location = new System.Drawing.Point(532, 159);
+            this.destinationDate.Name = "destinationDate";
+            this.destinationDate.Size = new System.Drawing.Size(200, 20);
+            this.destinationDate.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.destinationDate);
+            this.Controls.Add(this.departureDate);
+            this.Controls.Add(this.getQuotesButton);
+            this.Controls.Add(this.quoteOutputTextbox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.flyingToCombo);
             this.Controls.Add(this.flyingToSearchButton);
@@ -163,6 +203,10 @@ namespace CA1
         private System.Windows.Forms.Button flyingToSearchButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox flyingToInput;
+        private System.Windows.Forms.TextBox quoteOutputTextbox;
+        private System.Windows.Forms.Button getQuotesButton;
+        private System.Windows.Forms.DateTimePicker departureDate;
+        private System.Windows.Forms.DateTimePicker destinationDate;
     }
 }
 

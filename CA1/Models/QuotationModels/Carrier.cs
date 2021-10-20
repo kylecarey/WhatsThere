@@ -8,7 +8,12 @@ namespace CA1.Models
 {
     public class Carrier
     {
-        public int CarrierId { get; set;}
+        public int CarrierId { get; set; }
         public string Name { get; set; }
+
+        public Carrier()
+        {
+
+        }
     }
 }

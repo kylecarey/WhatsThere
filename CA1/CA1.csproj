@@ -59,11 +59,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Carrier.cs" />
-    <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\QuotationModels\Carrier.cs" />
+    <Compile Include="Models\QuotationModels\Currency.cs" />
+    <Compile Include="Models\QuotationModels\OutboundLeg.cs" />
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Places.cs" />
-    <Compile Include="Models\Quote.cs" />
+    <Compile Include="Models\QuotationModels\Place.cs" />
+    <Compile Include="Models\QuotationModels\Quote.cs" />
+    <Compile Include="Models\QuotationModels\Root.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

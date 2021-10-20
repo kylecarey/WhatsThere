@@ -16,5 +16,11 @@ namespace CA1.Models
         public bool SpaceBetweenAmountAndSymbol { get; set; }
         public int RoundingCoefficient { get; set; }
         public int DecimalDigits { get; set; }
+
+        public Currency()
+        {
+        }
     }
+
 }
+

@@ -8,6 +8,6 @@ namespace CA1.Models
 {
     public class Places
     {
-        public IList<Place> places { get; set; }
+        public IList<SearchPlace> places { get; set; }
     }
 }

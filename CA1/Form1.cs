@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CA1.Models;
+using CA1.Models.QuotationModels;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serialization.Json;
 
@@ -59,33 +61,41 @@ namespace CA1
             }
         }
 
-        public void GetQuotes(string originPlace, string destinationPlace, DateFormat outboundDate, DateFormat inboundDate)
+        public void GetQuotes(string originPlace, string destinationPlace, DateTime outboundDate, DateTime inboundDate)
         {
-            var client = new RestClient("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/browsequotes/autosuggest/v1.0/IE/EUR/en-GB/");
+            // Formatting Dates
+            string outbound = outboundDate.ToString("yyyy-MM-dd");
+            string inbound = inboundDate.ToString("yyyy-MM-dd");
+
+            var client = new RestClient("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/IE/EUR/en-GB/" + originPlace + "/" + destinationPlace + "/" + outbound);
             var request = new RestRequest(Method.GET);
             request.AddHeader("x-rapidapi-host", "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com");
             request.AddHeader("x-rapidapi-key", "00c989c312mshd8a182e8bd8745dp1b0333jsn6045bc5f73e0");
 
             // Adding parameters
-            request.AddParameter("originplace", originPlace);
-            request.AddParameter("destinationplace", destinationPlace);
-            request.AddParameter("outboundpartialdate", outboundDate);
-            request.AddParameter("inboundpartialdate", inboundDate);
+            request.AddParameter("inboundpartialdate", inbound);
 
             // Executing Response
-            IRestResponse response = client.Execute(request);
+            var response = client.Execute(request);
 
             // Deserializing
             JsonDeserializer jd = new JsonDeserializer();
-            QuotationResult output = jd.Deserialize<QuotationResult>(response);
-            var places = output.Places;
+            Root output = jd.Deserialize<Root>(response);
             var quotes = output.Quotes;
-            var carriers = output.Carriers;
-            var currencies = output.Currencies;
 
-
-
-
+            if(quotes.Count != 0)
+            {
+                foreach (Quote q in quotes)
+                {
+                    quoteOutputTextbox.Text += "\n" + q.ToString();
+                }
+            }
+            else
+            {
+                Console.WriteLine("nothing available");
+            }
+            
+            
         }
 
         private void departureSearchButton_Click(object sender, EventArgs e)
@@ -102,38 +112,30 @@ namespace CA1
 
         private void departureComboFormat(object sender, ListControlConvertEventArgs e)
         {
-            string placename = ((Place)e.ListItem).PlaceName;
-            string countryname = ((Place)e.ListItem).CountryName;
+            string placename = ((SearchPlace)e.ListItem).PlaceName;
+            string countryname = ((SearchPlace)e.ListItem).CountryName;
             e.Value = placename + ", " + countryname;
         }
 
         private void flyingToComboFormat(object sender, ListControlConvertEventArgs e)
         {
-            string placename = ((Place)e.ListItem).PlaceName;
-            string countryname = ((Place)e.ListItem).CountryName;
-            string placeid = ((Place)e.ListItem).PlaceId;
+            string placename = ((SearchPlace)e.ListItem).PlaceName;
+            string countryname = ((SearchPlace)e.ListItem).CountryName;
+            string placeid = ((SearchPlace)e.ListItem).PlaceId;
             e.Value = placename + ", " + countryname;
         }
 
-        // Classes for making an iterable list of objects
-        public class Quotes
+        private void getQuotesButton_Click(object sender, EventArgs e)
         {
-            public IList<Quote> quotes;
-        }
-        public class Carriers
-        {
-            public IList<Carrier> carriers;
-        }
-        public class Currencies
-        {
-            public IList<Currency> currencies;
-        }
-        public class QuotationResult
-        {
-            public Quotes Quotes { get; set; }
-            public Places Places { get; set; }
-            public Carriers Carriers { get; set; }
-            public Currencies Currencies { get; set; }
+            SearchPlace dep = (SearchPlace)departureCombo.SelectedItem;
+
+            SearchPlace fly = (SearchPlace)flyingToCombo.SelectedItem;
+
+            DateTime outboundDate = departureDate.Value.Date;
+            DateTime inboundDate = destinationDate.Value.Date;
+
+            GetQuotes(dep.PlaceId, fly.PlaceId, outboundDate, inboundDate);
+
         }
     }
 }

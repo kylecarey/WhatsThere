@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CA1.Models
 {
-    public class Place
+    public class SearchPlace
     {
         public string PlaceId { get; set; }
         public string PlaceName { get; set; }
